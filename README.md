@@ -1,56 +1,41 @@
-# Customized-Logging-in-Python
+🐍 Customized Logging in Python
 
-In this repository, I am going to showcase Customized Logging in Python with examples.
+A quick guide to setting up custom loggers in Python using the logging module.
 
-Root Logger in Python Logging Module, Problems with root logger. Customized Logging in Python, and Steps for creating a custom logger.
+Why Customize?
 
-Step 1: Create a logger
+Root logger is basic and shared — not ideal for large apps.
 
-First we need to create a logger, which is nothing but an object to the logger class. We can create this by using getLogger() method. After creating the logger object we have to set the log level using setLevel() method.
+Custom loggers give better control over formatting, levels, and output.
 
-logger = logging.getLogger(‘demologger’)
+🔧 Steps to Create a Custom Logger
+1. Create a Logger
+logger = logging.getLogger('demologger')
 logger.setLevel(logging.INFO)
 
-We can give any name to the logger as we wish. In the above example, a logger with name ‘demologger’ will be created.
-
-Step 2: Creating handler
-
-The next step is to create a handler object and set the logging level. There are several types of Handlers like StreamHandler, FileHandler etc. If we use StreamHandler then log messages will be printed to the console. If we use FileHandler, then the log messages will be printed into file.
-
-For Stream Handler,
+2. Create Handlers
 consoleHandler = logging.StreamHandler()
-consoleHandler.setLevel(logging.INFO)
+fileHandler = logging.FileHandler('test.log')
 
-For File Handler,
-fileHandler = logging.FileHandler(‘test.log’)
+3. Set Handler Levels
+consoleHandler.setLevel(logging.INFO)
 fileHandler.setLevel(logging.INFO)
 
-Step 3: Creating Formatter
-
-The next step is to create a formatter object.
-
-formatter = logging.Formatter(‘%(asctime)s – %(name)s – %(levelname)s:
-%(message)s’, datefmt=’%d/%m/%Y %I:%M:%S %p’)
-
-Step 4: Adding Formatter to Handler
-
-Now we have to add the Formatter (object) to Handler (object) using setFormatter() method.
-
+4. Create and Set Formatter
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+    datefmt='%d/%m/%Y %I:%M:%S %p'
+)
 consoleHandler.setFormatter(formatter)
+fileHandler.setFormatter(formatter)
 
-Step 5: Adding Handler object to the Logger
-
-Then the handler object should be added to the logger object using addHandler() method.
-
+5. Add Handlers to Logger
+logger.addHandler(consoleHandler)
 logger.addHandler(fileHandler)
-logger.addHandler(streamHandler)
 
-Step 6: Writing the log messages
-
-The last step is writing the log messages to the file using the methods and logger object which we created.
-
-logger.debug(‘debug message’)
-logger.info(‘info message’)
-logger.warn(‘warn message’)
-logger.error(‘error message’)
-logger.critical(‘critical message’)
+6. Log Messages
+logger.debug('debug message')
+logger.info('info message')
+logger.warning('warn message')
+logger.error('error message')
+logger.critical('critical message')
